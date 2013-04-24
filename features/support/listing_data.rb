@@ -1,0 +1,18 @@
+# encoding: UTF-8
+
+Before("@given_listings") do
+  steps %{
+    Given listings data as following:
+      | Source Site | Source Id | Last Listing Id | Title                           | Description                                                             | Photo               | Type of space | Size(Square Feet) | Aprox: length | Aprox: width | Aprox: height | Could be vehicle storage? | Monthly rental rate | Availability | Ground/Flooring   | Small Vehicle? | Large Vehicle? | Listing Address    | City        | State/Province | Postal Code | Country | Latitude   | Longitude    |
+      | test        |    000001 |               0 | Perfect Storage, Great Location | A perfect storage, recently renovated, located in the center of city    | 100-0.jpg,100-1.jpg | Outdoor       | 216               | 18.0          | 12.0         | 9.0           | Yes                       | 50.00               | 4-12 months  | Gravel            | No             | No             | 12a Granville St   | Vancouver   | BC             | V6C 3J3     | Canada  | 49.2828613 | -123.1172704 |
+      | test        |    000002 |          000001 | Self Storage Close to Downtown  | Walking distance to downtown. Long and short term rental available.     | 100-2.jpg,100-3.jpg | Indoor        | 150               | 25.0          | 6.0          | 7.0           | No                        | 28.00               | 1-3 months   | Carpeted          | No             | Yes            | 10A ST S           | Cranbrook   | BC             | V1C 1T6     | Canada  | 49.4985078 | -115.7621108 |
+      | test        |    000003 |          000002 | Storage Under Climate Control   | A secure space for a storage with airconditioning.                      | 100-4.jpg,100-5.jpg | Indoor        | 100               | 25.0          | 4.0          | 10.0          | No                        | 25.00               | 4-12 months  | Cement            | Yes            | No             | Ave                | Calgary     | AB             | T3C 0N6     | Canada  | 51.0437072 | -114.102988  |
+      | test        |    000004 |          000003 | 10 mins. to C-Train             | This is a convenient space for your car storage nearby C-Train station. | 100-6.jpg,100-7.jpg | Outdoor       | 600               | 30.0          | 20.0         | 9.5           | Yes                       | 100.00              | 1-3 months   | Grass             | No             | No             | Seymour St         | Vancouver   | BC             | V6B 3H5     | Canada  | 49.2844645 | -123.1138147 |
+      | test        |    000005 |          000004 | Au centre de laction à Québec!  | Great location right in the middle of Quebec City                       | 100-8.jpg,100-9.jpg | Outdoor       | 1500              | 50.0          | 30.0         | 20.0          | Yes                       | 150.00              | 4-12 months  | Gravel            | Yes            | Yes            | Rue Crémazie Es    | Quebec City | QC             | G1R 1Y2     | Canada  | 46.8062239 | -71.2253829  |
+      | test        |    000006 |          000005 | Small storage in Brigham Circle | Small storage in Brigham Circle, short walk to Harvard Medical          | 101-0.jpg,101-2.jpg | Indoor        | 2000              | 50.0          | 40.0         | 8.0           | No                        | 40.00               | 3+ years     | Laminate/hardwood | No             | No             | 77 Golden Grove Rd | Saint John  | NB             | E2H 1W6     | Canada  | 45.3153149 | -66.0191799  |
+  }
+end
+
+Given(/^listings data as following:$/) do |table|
+  @listings = table.hashes
+end

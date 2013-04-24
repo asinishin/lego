@@ -11,6 +11,9 @@
 # Mac files
 .DS_Store
 
+# Test photos
+*.jpg
+
 # Vim temp files
 *.swp
 *.swo

@@ -1,5 +1,6 @@
 require "lego/version"
+require "lego/lego"
 
-module Lego
+#module Lego
   # Your code goes here...
-end
+#end

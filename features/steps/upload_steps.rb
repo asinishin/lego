@@ -37,7 +37,7 @@ When(/^the service uploaded the listing with data: "(.*?)"$/) do |arg1|
   @result = Lego::Api.upload_listing(listing, address)
   if @result
     item['Photo'].split(',').each do |e|
-      Lego::Api.upload_photo(@result, e)
+      Lego::Api.upload_photo(@result, Lego::Api::BASE_PHOTOS + e)
     end
   end
 end

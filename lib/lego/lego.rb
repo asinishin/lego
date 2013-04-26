@@ -52,7 +52,7 @@ module Lego # Squirrel
     def self.upload_photo(listing_id, file_path)
       item = {
         hosting_description_id: listing_id,
-	image: File.new(BASE_PHOTOS + file_path, 'rb')
+	image: File.new(file_path, 'rb')
       }
       RestClient.post BASE_URL + "/spaces/#{listing_id}/space_photos.json", { space_photo: item }, { cookies: @@cookies } 
     end

@@ -1,9 +1,10 @@
 Given(/^the service logged in to the destination server$/) do
-  Lego::Api.login
+  @receiver = LegoReceiver::Api.instance
+  @receiver.login
 end
 
 When(/^the service obtained "(.*?)" of "(.*?)" site$/) do |arg1, arg2|
-  @last_sourced_id = Lego::Api.last_id(arg2) 
+  @last_sourced_id = @receiver.last_id(arg2) 
 end
 
 When(/^the service uploaded the listing with data: "(.*?)"$/) do |arg1|
@@ -34,10 +35,10 @@ When(/^the service uploaded the listing with data: "(.*?)"$/) do |arg1|
     latitude:            item['Latitude'],
     longitude:           item['Longitude']
   }
-  @result = Lego::Api.upload_listing(listing, address)
+  @result = @receiver.upload_listing(listing, address)
   if @result
     item['Photo'].split(',').each do |e|
-      Lego::Api.upload_photo(@result, Lego::Api::BASE_PHOTOS + e)
+      @receiver.upload_photo(@result, Lego::BASE_PHOTOS + e)
     end
   end
 end
@@ -47,5 +48,5 @@ Then(/^the destination server should return the success status$/) do
 end
 
 Then(/^the service logged out$/) do
-  Lego::Api.logout
+  @receiver.logout
 end

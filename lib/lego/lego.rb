@@ -2,12 +2,9 @@ require 'rubygems'
 require 'rest_client'
 require 'json'
 
-module Lego # Squirrel
+module Lego
 
-  BASE_URL     = ENV['LEGO_BASE_URL']
-  BASE_PHOTOS  = ENV['LEGO_BASE_PHOTOS']
-  USER_EMAIL   = ENV['LEGO_USER_EMAIL']
-  USER_PSSW    = ENV['LEGO_USER_PSSW']
+  BASE_PHOTOS = ENV['LEGO_BASE_PHOTOS']
 
   DEFAULT_LISTING = {
     title:          'No title',
@@ -36,41 +33,15 @@ module Lego # Squirrel
     longitude:      0.0
   }
 
-  class Api
-    def self.login
-      response = RestClient.post BASE_URL + '/api/sessions.json', email: USER_EMAIL, password: USER_PSSW
-      @@cookies = response.cookies
-    end
+private
 
-    def self.upload_listing(listing, address)
-      item = DEFAULT_LISTING.merge(listing)
-      addr = DEFAULT_ADDRESS.merge(address)
-      response = RestClient.post BASE_URL + '/api/listings.json', { listing: item, address: addr }, { cookies: @@cookies }
-      JSON.parse(response)['id']
-    end
+  def _login(base_url, email, password)
+    response = RestClient.post base_url + '/api/sessions.json', email: email, password: password
+    @cookies = response.cookies
+  end
 
-    def self.upload_photo(listing_id, file_path)
-      item = {
-        hosting_description_id: listing_id,
-	image: File.new(file_path, 'rb')
-      }
-      RestClient.post BASE_URL + "/spaces/#{listing_id}/space_photos.json", { space_photo: item }, { cookies: @@cookies } 
-    end
-
-    def self.download_listing(source_site, source_id)
-    end
-
-    def self.download_next_listing(source_site, last_source_id)
-    end
-
-    def self.last_id(source_site)
-      response = RestClient.get BASE_URL + "/api/listings/#{source_site}/last_id.json", cookies: @@cookies
-      JSON.parse(response)['id']
-    end
-
-    def self.logout
-      RestClient.delete BASE_URL + '/api/sessions/123.json', cookies: @@cookies
-    end
+  def _logout(base_url)
+    RestClient.delete base_url + '/api/sessions/123.json', cookies: @cookies
   end
 
 end

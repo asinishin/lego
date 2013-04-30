@@ -34,6 +34,10 @@ module LegoReceiver # Squirrel
       RestClient.post BASE_URL + "/spaces/#{listing_id}/space_photos.json", { space_photo: item }, { cookies: @cookies } 
     end
 
+    def upload_features_and_cautions(listing_id, features_and_cautions)
+      RestClient.put BASE_URL + "/api/listings/#{listing_id}.json", features_and_cautions, { cookies: @cookies } 
+    end
+
     def last_id(source_site)
       response = RestClient.get BASE_URL + "/api/listings/#{source_site}/last_id.json", cookies: @cookies
       JSON.parse(response)['id']

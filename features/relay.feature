@@ -7,4 +7,5 @@ Feature: Listing relay
   # Given listings uploaded by "upload.feature" test!
   Given source site "test"
   When the service loaded a listing
+  And  the service loaded photos
   Then it should contain 

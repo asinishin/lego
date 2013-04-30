@@ -29,15 +29,19 @@ module LegoRelay # Squirrel
     def load_listing(source_site)
       response = RestClient.get "#{BASE_URL}/api/listings/#{source_site}.json", { cookies: @cookies }
       response = JSON.parse(response).decamelize.symbolize_keys
-      {
-        listing: response[:listing].decamelize.symbolize_keys,
-	address: response[:address].decamelize.symbolize_keys,
-	photos:  response[:photos].map { |e| e.symbolize_keys },
-	indoor_features:  response[:indoor_features].map { |e| e.decamelize.symbolize_keys },
-	outdoor_features: response[:outdoor_features].map { |e| e.decamelize.symbolize_keys },
-	indoor_cautions:  response[:indoor_cautions].map { |e| e.decamelize.symbolize_keys },
-	outdoor_cautions: response[:outdoor_cautions].map { |e| e.decamelize.symbolize_keys }
-      }
+      if response[:listing]
+	{
+	  listing: response[:listing].decamelize.symbolize_keys,
+	  address: response[:address].decamelize.symbolize_keys,
+	  photos:  response[:photos].map { |e| e.symbolize_keys },
+	  indoor_features:  response[:indoor_features].map { |e| e.decamelize.symbolize_keys },
+	  outdoor_features: response[:outdoor_features].map { |e| e.decamelize.symbolize_keys },
+	  indoor_cautions:  response[:indoor_cautions].map { |e| e.decamelize.symbolize_keys },
+	  outdoor_cautions: response[:outdoor_cautions].map { |e| e.decamelize.symbolize_keys }
+	}
+      else
+        nil
+      end
     end
 
     def load_photos(photos)

@@ -36,18 +36,22 @@ module LegoReceiver # Squirrel
 
     def upload_features_and_cautions(listing_id, is_indoor, features, cautions)
       if is_indoor
-        fts = indoor_features: {
-	  '' => features
+        fts = { indoor_features: {
+	    '' => features
+	  }
 	}
-	cts = indoor_cautions: {
-	  '' => cautions
+	cts = { indoor_cautions: {
+	    '' => cautions
+	  }
 	}
       else
-        fts = outdoor_features: {
-	  '' => features
+        fts = { outdoor_features: {
+	    '' => features
+	  }
 	}
-	cts = outdoor_cautions: {
-	  '' => cautions
+	cts = { outdoor_cautions: {
+	    '' => cautions
+	  }
 	}
       end
       RestClient.put BASE_URL + "/api/listings/#{listing_id}.json", { fts, cts }, { cookies: @cookies } 

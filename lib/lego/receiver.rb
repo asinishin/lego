@@ -34,8 +34,23 @@ module LegoReceiver # Squirrel
       RestClient.post BASE_URL + "/spaces/#{listing_id}/space_photos.json", { space_photo: item }, { cookies: @cookies } 
     end
 
-    def upload_features_and_cautions(listing_id, features_and_cautions)
-      RestClient.put BASE_URL + "/api/listings/#{listing_id}.json", features_and_cautions, { cookies: @cookies } 
+    def upload_features_and_cautions(listing_id, is_indoor, features, cautions)
+      if is_indoor
+        fts = indoor_features: {
+	  '' => features
+	}
+	cts = indoor_cautions: {
+	  '' => cautions
+	}
+      else
+        fts = outdoor_features: {
+	  '' => features
+	}
+	cts = outdoor_cautions: {
+	  '' => cautions
+	}
+      end
+      RestClient.put BASE_URL + "/api/listings/#{listing_id}.json", { fts, cts }, { cookies: @cookies } 
     end
 
     def last_id(source_site)

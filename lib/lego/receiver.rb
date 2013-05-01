@@ -31,7 +31,7 @@ module LegoReceiver # Squirrel
         hosting_description_id: listing_id,
 	image: File.new(file_path, 'rb')
       }
-      RestClient.post BASE_URL + "/spaces/#{listing_id}/space_photos.json", { space_photo: item }, { cookies: @cookies } 
+      RestClient.post BASE_URL + "/spaces/#{listing_id}/space_photos.json", { space_photo: item, async: true }, { cookies: @cookies } 
     end
 
     def upload_features_and_cautions(listing_id, is_indoor, features, cautions)
